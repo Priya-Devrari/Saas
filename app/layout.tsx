@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Navbar from "@/components/ui/Navbar";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -22,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${bricolage.variable} antialiased`}>{children}</body>
+      <body className={`${bricolage.variable} antialiased`}>
+        <Navbar />
+        {children}</body>
     </html>
   );
 }
