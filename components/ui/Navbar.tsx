@@ -5,7 +5,7 @@ import NavItem from '../NavItem'
 import { usePathname } from 'next/dist/client/components/navigation'
 
 const Navbar = () => {
-    const pathname = usePathname();
+   
   return (
     <nav className="navbar">
       <Link href="/"><div className="flex items-center gap-2.5 cursor-pointer">
