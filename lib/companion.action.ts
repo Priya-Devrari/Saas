@@ -30,3 +30,39 @@ export const createCompanion = async (formData: CreateCompanion) => {
 
   return data[0];
 };
+export const getCompanions = async ({ limit = 10, page = 1, subject, topic }: { limit?: number; page?: number; subject?: string; topic?: string }) => {
+  const supabase = createSupabaseClient();
+
+    let query = supabase.from("companions").select("*");
+
+    if (subject && topic) {  
+        query = query.ilike('subject', `%${subject}%`)
+        .or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+    }
+
+   else if(subject){
+    query =  query.ilike('subject', `%${subject}%`)
+   }
+   else if(topic){
+    query = query.ilike('topic', `%${topic}%`).or(`name.ilike.%${topic}%`);
+   }
+    const { data: companions, error } = await query.range((page - 1) * limit, page * limit);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return companions;
+};
+export const getCompanion = async (id: string) => {
+  const supabase = createSupabaseClient();
+
+  const { data, error } = await supabase
+    .from('companions')
+    .select()
+    .eq('id', id);
+
+  if (error) return console.log(error);
+
+  return data[0];
+};
