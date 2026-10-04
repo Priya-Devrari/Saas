@@ -64,7 +64,11 @@ const CompanionSession = async ({
           {duration} minutes
         </div>
       </article>
-      <CompanionComponent />
+      <CompanionComponent 
+    {...companion}
+    companionId={id}
+    userName={user.firstName!}
+    userImage={user.imageUrl!} />
     </main>
   );
 };
