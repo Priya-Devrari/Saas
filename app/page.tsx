@@ -1,47 +1,37 @@
-import CompanionCard from '@/components/CompanionCard'
-import CompanionList from '@/components/CompanionList'
-import Cta from '@/components/Cta'
-import { Button } from '@/components/ui/button'
-import { recentSessions } from '@/constants'
-import React from 'react'
-import Navbar from '@/components/ui/Navbar'
+import CompanionCard from "@/components/CompanionCard";
+import CompanionsList from "@/components/CompanionList";
+import CTA from "@/components/Cta";
+import {recentSessions} from "@/constants";
+import {getAllCompanions, getRecentSessions} from "@/lib/companion.action";
+import {getSubjectColor} from "@/lib/utils";
 
-export const dynamic = 'force-dynamic'
+const Page = async () => {
+    const companions = await getAllCompanions({ limit: 3 });
+    const recentSessionsCompanions = await getRecentSessions(10);
 
-const Page = () => {
   return (
     <main>
-  
-      <h2 className="text-2xl underline">Popular Companions</h2>
-      <section className="home-section">
-        <CompanionCard id="123"
-        name="Neura The Brainy Explorer"
-        topic="Neural Network of the Brain"
-        subject="Science"
-        duration={45}
-        color="#ffda69"
-        />
-         <CompanionCard id="456"
-        name="Countsy the number wizard"
-        topic="Derivatives and Integrals"
-        subject="Maths"
-        duration={30}
-        color="#e5b8ff"
-        />
-         <CompanionCard id="789"
-        name="Verba the vocabulary builder"
-        topic="Language"
-        subject="English Literature"
-        duration={30}
-        color="#BDE7FF"
-        />
-       
-      </section>
-      <section className="home-section">
-        <CompanionList title="Recently Completed Sessions" companions={recentSessions} classNames="w-2/3 max-lg: w-full" />
-        <Cta />
-      </section>
-      
+      <h1>Popular Companions</h1>
+
+        <section className="home-section">
+            {companions.map((companion) => (
+                <CompanionCard
+                    key={companion.id}
+                    {...companion}
+                    color={getSubjectColor(companion.subject)}
+                />
+            ))}
+
+        </section>
+
+        <section className="home-section">
+            <CompanionsList
+                title="Recently completed sessions"
+                companions={recentSessionsCompanions}
+                classNames="w-2/3 max-lg:w-full"
+            />
+            <CTA />
+        </section>
     </main>
   )
 }

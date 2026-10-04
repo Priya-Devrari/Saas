@@ -11,6 +11,34 @@ export const getSubjectColor = (subject: string) => {
   return subjectsColors[subject as keyof typeof subjectsColors];
 };
 
+export const getSubjectIcon = (subject: string) => {
+  const codingSubjects = [
+    "next.js",
+    "nextjs",
+    "react",
+    "javascript",
+    "typescript",
+    "python",
+    "java",
+    "c++",
+    "c",
+    "html",
+    "css",
+    "node.js",
+    "nodejs",
+    "express",
+    "mongodb",
+    "sql",
+    "coding",
+  ];
+
+  if (codingSubjects.includes(subject.toLowerCase())) {
+    return "/icons/coding.svg";
+  }
+
+  return `/icons/${subject.toLowerCase()}.svg`;
+};
+
 export const configureAssistant = (voice: string, style: string) => {
   const voiceId =
     voices[voice as keyof typeof voices][
