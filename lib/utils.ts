@@ -12,10 +12,14 @@ export const getSubjectColor = (subject: string) => {
 };
 
 export const getSubjectIcon = (subject: string) => {
+  const normalizedSubject = subject.trim().toLowerCase();
+
   const codingSubjects = [
     "next.js",
     "nextjs",
     "react",
+    "react.js",
+    "reactjs",
     "javascript",
     "typescript",
     "python",
@@ -27,17 +31,20 @@ export const getSubjectIcon = (subject: string) => {
     "node.js",
     "nodejs",
     "express",
+    "express.js",
     "mongodb",
     "sql",
     "coding",
   ];
 
-  if (codingSubjects.includes(subject.toLowerCase())) {
+  if (codingSubjects.includes(normalizedSubject)) {
     return "/icons/coding.svg";
   }
 
-  return `/icons/${subject.toLowerCase()}.svg`;
+  return `/icons/${normalizedSubject}.svg`;
 };
+
+
 
 export const configureAssistant = (voice: string, style: string) => {
   const voiceId =
