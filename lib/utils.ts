@@ -14,36 +14,36 @@ export const getSubjectColor = (subject: string) => {
 export const getSubjectIcon = (subject: string) => {
   const normalizedSubject = subject.trim().toLowerCase();
 
-  const codingSubjects = [
-    "next.js",
-    "nextjs",
-    "react",
-    "react.js",
-    "reactjs",
-    "javascript",
-    "typescript",
-    "python",
-    "java",
-    "c++",
-    "c",
-    "html",
-    "css",
-    "node.js",
-    "nodejs",
-    "express",
-    "express.js",
-    "mongodb",
-    "sql",
-    "coding",
-  ];
-
-  if (codingSubjects.includes(normalizedSubject)) {
+  if (
+    normalizedSubject.includes("next") ||
+    normalizedSubject.includes("react") ||
+    normalizedSubject.includes("javascript") ||
+    normalizedSubject.includes("typescript") ||
+    normalizedSubject.includes("python") ||
+    normalizedSubject.includes("java") ||
+    normalizedSubject.includes("c++") ||
+    normalizedSubject === "c" ||
+    normalizedSubject.includes("html") ||
+    normalizedSubject.includes("css") ||
+    normalizedSubject.includes("node") ||
+    normalizedSubject.includes("express") ||
+    normalizedSubject.includes("mongodb") ||
+    normalizedSubject.includes("sql") ||
+    normalizedSubject === "coding"
+  ) {
     return "/icons/coding.svg";
   }
 
-  return `/icons/${normalizedSubject}.svg`;
-};
+  const iconMap: Record<string, string> = {
+    maths: "/icons/maths.svg",
+    math: "/icons/maths.svg",
+    science: "/icons/science.svg",
+    economics: "/icons/economics.svg",
+    language: "/icons/language.svg",
+  };
 
+  return iconMap[normalizedSubject] || "/icons/coding.svg";
+};
 
 
 export const configureAssistant = (voice: string, style: string) => {
