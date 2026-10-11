@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import {
   getBookmarkedCompanions,
 } from "@/lib/companion.action";
 
-interface companionCardProps {
+interface CompanionCardProps {
   id: string;
   name: string;
   topic: string;
@@ -27,48 +27,78 @@ const CompanionCard = ({
   subject,
   duration,
   color,
-}: companionCardProps) => {
+}: CompanionCardProps) => {
   const { user } = useUser();
   const pathname = usePathname();
-  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const [isBookmarked, setIsBookmarked] =
+    useState(false);
 
   useEffect(() => {
     const checkBookmark = async () => {
-      if (!user) return;
+      if (!user) {
+        setIsBookmarked(false);
+        return;
+      }
 
-      const bookmarkedCompanions = (await getBookmarkedCompanions(user.id)) as unknown as Array<{
-        id: string;
-      } | null>;
+      try {
+        const bookmarkedCompanions =
+          (await getBookmarkedCompanions(
+            user.id
+          )) as unknown as Array<{
+            id: string;
+          } | null>;
 
-      const exists = bookmarkedCompanions.some(
-        (companion) => companion?.id === id
-      );
+        const exists =
+          bookmarkedCompanions.some(
+            (companion) =>
+              companion?.id === id
+          );
 
-      setIsBookmarked(exists);
+        setIsBookmarked(exists);
+      } catch (error) {
+        console.error(
+          "Failed to check bookmark:",
+          error
+        );
+      }
     };
 
     checkBookmark();
   }, [user, id]);
 
   const handleBookmark = async () => {
-    if (!user) return;
+    if (!user) {
+      return;
+    }
 
-    if (isBookmarked) {
-      await removeBookmark(id, pathname);
-      setIsBookmarked(false);
-    } else {
-      await addBookmark(id, pathname);
-      setIsBookmarked(true);
+    try {
+      if (isBookmarked) {
+        await removeBookmark(id, pathname);
+        setIsBookmarked(false);
+      } else {
+        await addBookmark(id, pathname);
+        setIsBookmarked(true);
+      }
+    } catch (error) {
+      console.error(
+        "Failed to update bookmark:",
+        error
+      );
     }
   };
 
   return (
     <article
       className="companion-card"
-      style={{ backgroundColor: color }}
+      style={{
+        backgroundColor: color,
+      }}
     >
       <div className="flex justify-between items-center">
-        <div className="subject-badge">{subject}</div>
+        <div className="subject-badge">
+          {subject}
+        </div>
 
         <button
           type="button"
@@ -81,14 +111,20 @@ const CompanionCard = ({
                 ? "/icons/bookmark-filled.svg"
                 : "/icons/bookmark.svg"
             }
-            alt={isBookmarked ? "Remove bookmark" : "Bookmark"}
+            alt={
+              isBookmarked
+                ? "Remove bookmark"
+                : "Bookmark"
+            }
             width={20}
             height={20}
           />
         </button>
       </div>
 
-      <h2 className="text-2xl font-bold">{name}</h2>
+      <h2 className="text-2xl font-bold">
+        {name}
+      </h2>
 
       <p className="text-sm">
         Topic: {topic}

@@ -64,20 +64,21 @@ export const configureAssistant = (voice: string, style: string) => {
       language: "en",
     },
 
-    voice: {
-      provider: "11labs",
-      voiceId: voiceId,
-      stability: 0.4,
-      similarityBoost: 0.8,
-      speed: 1,
-      style: 0.5,
-      useSpeakerBoost: true,
-    },
+ voice: {
+  provider: "11labs",
+  model: "eleven_flash_v2_5",
+  voiceId: voiceId,
+  stability: 0.4,
+  similarityBoost: 0.8,
+  speed: 1,
+  style: 0.5,
+  useSpeakerBoost: true,
+},
 
-    model: {
-      provider: "openai",
-      model: "gpt-4",
-      messages: [
+model: {
+  provider: "openai",
+  model: "gpt-4.1",
+  messages: [
         {
           role: "system",
           content: `You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.

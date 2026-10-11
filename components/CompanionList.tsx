@@ -23,7 +23,12 @@ const CompanionList = ({
   classNames,
 }: CompanionListProps) => {
   return (
-    <article className={cn('companion-list', classNames)}>
+  <article
+  className={cn(
+    "companion-list max-h-[500px] overflow-y-auto",
+    classNames
+  )}
+>
       <h2>{title}</h2>
 
       <Table>
